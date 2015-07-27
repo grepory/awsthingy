@@ -129,6 +129,7 @@ func validatePresencePathParams(params map[string]string, keys... string) bool {
 }
 
 // FIXME: combine presence validation of path params and form value
+// FIXME: this is case sensitive which is wrong
 func validatePresenceRequest(r *web.Request, keys... string) bool {
 	ok := true
 	for _, k := range keys {

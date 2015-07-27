@@ -8,6 +8,12 @@
 			"branch": "default"
 		},
 		{
+			"importpath": "github.com/aws/aws-sdk-go",
+			"repository": "https://github.com/aws/aws-sdk-go",
+			"revision": "034c293ded73cf710ba12f9173d45b5d9c69ec20",
+			"branch": "master"
+		},
+		{
 			"importpath": "github.com/beorn7/perks/quantile",
 			"repository": "https://github.com/beorn7/perks",
 			"revision": "b965b613227fddccbfffe13eae360ed3fa822f8d",
@@ -49,6 +55,12 @@
 			"importpath": "github.com/inconshreveable/mousetrap",
 			"repository": "https://github.com/inconshreveable/mousetrap",
 			"revision": "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/lsegal/gucumber",
+			"repository": "https://github.com/lsegal/gucumber",
+			"revision": "e8116c9c66e641e9f81fc0a79fac923dfc646378",
 			"branch": "master"
 		},
 		{
@@ -99,6 +111,12 @@
 			"branch": "master"
 		},
 		{
+			"importpath": "github.com/shiena/ansicolor",
+			"repository": "https://github.com/shiena/ansicolor",
+			"revision": "a5e2b567a4dd6cc74545b8a4f27c9d63b9e7735b",
+			"branch": "master"
+		},
+		{
 			"importpath": "github.com/spf13/cobra",
 			"repository": "https://github.com/spf13/cobra",
 			"revision": "385fc87e4343efec233811d3d933509e8975d11a",
@@ -108,6 +126,19 @@
 			"importpath": "github.com/spf13/pflag",
 			"repository": "https://github.com/spf13/pflag",
 			"revision": "67cbc198fd11dab704b214c1e629a97af392c085",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/stretchr/testify/assert",
+			"repository": "https://github.com/stretchr/testify",
+			"revision": "089c7181b8c728499929ff09b62d3fdd8df8adff",
+			"branch": "master",
+			"path": "/assert"
+		},
+		{
+			"importpath": "github.com/vaughan0/go-ini",
+			"repository": "https://github.com/vaughan0/go-ini",
+			"revision": "a98ad7ee00ec53921f08832bc06ecf7fd600e6a1",
 			"branch": "master"
 		}
 	]
