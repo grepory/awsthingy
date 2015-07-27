@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 )
@@ -31,17 +32,20 @@ func NewClient(uri string, keyId string, key string) (*Client, error) {
 	return client, nil
 }
 
-func (c *Client) buildUrl(path string) (string, error) {
-	url, err := url.Parse(fmt.Sprintf("%s/%s", c.url, path))
+func (c *Client) buildRequest(method, path string) (*http.Request, error) {
+	urlString := fmt.Sprintf("%s%s", c.url, path)
+	req, err := http.NewRequest(method, urlString, nil)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	values := url.Query()
+	values := req.URL.Query()
 	values.Add("AWS_SECRET_ACCESS_KEY", c.key)
 	values.Add("AWS_ACCESS_KEY_ID", c.keyId)
 
-	return url.String(), nil
+	req.URL.RawQuery = values.Encode()
+	log.Print(req.URL.String())
+	return req, nil
 }
 
 type listInstancesResponse struct {
@@ -49,12 +53,7 @@ type listInstancesResponse struct {
 }
 
 func (c *Client) ListInstances(vpc string) ([]string, error) {
-	url, err := c.buildUrl(fmt.Sprintf("/vpc/%s/instances", vpc))
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := c.buildRequest("GET", fmt.Sprintf("/vpc/%s/instances", vpc))
 	if err != nil {
 		return nil, err
 	}
@@ -79,12 +78,7 @@ func (c *Client) ListInstances(vpc string) ([]string, error) {
 }
 
 func (c *Client) Terminate(instance string) error {
-	url, err := c.buildUrl(fmt.Sprintf("/instances/%s", instance))
-	if err != nil {
-		return err
-	}
-
-	req, err := http.NewRequest("DELETE", url, nil)
+	req, err := c.buildRequest("DELETE", fmt.Sprintf("/instances/%s", instance))
 	if err != nil {
 		return err
 	}
@@ -103,15 +97,11 @@ type cloneResponse struct {
 }
 
 func (c *Client) Clone(instance string) (string, error) {
-	url, err := c.buildUrl(fmt.Sprintf("/instances/%s/clone", instance))
+	req, err := c.buildRequest("PUT", fmt.Sprintf("/instances/%s/clone", instance))
 	if err != nil {
 		return "", err
 	}
 
-	req, err := http.NewRequest("PUT", url, nil)
-	if err != nil {
-		return "", err
-	}
 	resp, err := c.client.Do(req)
 	if err != nil {
 		return "", err
