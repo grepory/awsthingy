@@ -68,6 +68,10 @@ func (c *Client) ListInstances(vpc string) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
+	if resp.StatusCode != 200 {
+		return nil, fmt.Errorf(string(body))
+	}
+
 	instances := new(listInstancesResponse)
 	err = json.Unmarshal(body, instances)
 	if err != nil {
@@ -88,6 +92,14 @@ func (c *Client) Terminate(instance string) error {
 		return err
 	}
 	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode != 200 {
+		return fmt.Errorf(string(body))
+	}
 
 	return nil
 }
