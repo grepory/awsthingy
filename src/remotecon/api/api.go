@@ -61,7 +61,8 @@ func (c *ApiContext) VpcListInstances(rw web.ResponseWriter, r *web.Request) {
 	vpcParams := &ec2.DescribeVPCsInput{}
 	vpcs, err := ec2service.DescribeVPCs(vpcParams)
 	if err != nil {
-		panic(err)
+		awsError(err, rw)
+		return
 	}
 
 	foundVpc := false
@@ -89,7 +90,8 @@ func (c *ApiContext) VpcListInstances(rw web.ResponseWriter, r *web.Request) {
 	}
 	instances, err := ec2service.DescribeInstances(instanceParams)
 	if err != nil {
-		panic(err)
+		awsError(err, rw)
+		return
 	}
 
 	instanceOutput := make([]string, 0)
@@ -117,7 +119,7 @@ func (c *ApiContext) CloneInstance(rw web.ResponseWriter, r *web.Request) {
 
 func (c *ApiContext) ValidateAwsCredentials(rw web.ResponseWriter, r *web.Request, next web.NextMiddlewareFunc) {
 	if ok := validatePresenceRequest(r, "AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"); !ok {
-		rw.WriteHeader(http.StatusBadRequest)
+		rw.WriteHeader(http.StatusUnauthorized)
 		writeJson(rw, map[string]string{
 			"error": "missing credentials",
 		})
@@ -126,4 +128,11 @@ func (c *ApiContext) ValidateAwsCredentials(rw web.ResponseWriter, r *web.Reques
 		c.AwsCredentials = creds
 		next(rw, r)
 	}
+}
+
+func awsError(err error, rw web.ResponseWriter) {
+	rw.WriteHeader(http.StatusBadGateway)
+	writeJson(rw, map[string]string{
+		"error": fmt.Sprintf("AWS error: %s", err.Error()),
+	})
 }
