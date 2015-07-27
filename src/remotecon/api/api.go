@@ -1,23 +1,26 @@
 package api
 
 import (
-	"github.com/gocraft/web"
-	"net/http"
+	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/service/ec2"
-	"github.com/aws/aws-sdk-go/aws/awsutil"
+	"github.com/gocraft/web"
+	"net/http"
+	"strings"
 )
 
 const awsRegion = "us-west-2"
+
 var vpcFilterName = "vpc-id"
 
 type ApiContext struct {
 	*Context
-	AwsCredentials		*credentials.Credentials
+	AwsCredentials *credentials.Credentials
 }
 
-var apiRouter	*web.Router
+var apiRouter *web.Router
 
 func init() {
 	apiRouter = router.Subrouter(ApiContext{}, "/")
@@ -35,7 +38,7 @@ func (c *ApiContext) Root(rw web.ResponseWriter, r *web.Request) {
 	}
 
 	writeJson(rw, map[string]string{
-		"status": "ok",
+		"status":        "ok",
 		"access_key_id": creds.AccessKeyID,
 	})
 }
@@ -46,23 +49,45 @@ func (c *ApiContext) VpcListInstances(rw web.ResponseWriter, r *web.Request) {
 		writeJson(rw, map[string]string{
 			"error": "no vpc id given",
 		})
+		return
 	}
-	vpcId := r.PathParams["id"]
 
+	vpcId := fmt.Sprintf("vpc-%s", strings.ToLower(r.PathParams["id"]))
 	ec2service := ec2.New(&aws.Config{
 		Credentials: c.AwsCredentials,
-		Region: awsRegion,
+		Region:      awsRegion,
 	})
-	ec2filters := []*ec2.Filter{
+
+	vpcParams := &ec2.DescribeVPCsInput{}
+	vpcs, err := ec2service.DescribeVPCs(vpcParams)
+	if err != nil {
+		panic(err)
+	}
+
+	foundVpc := false
+	for _, v := range vpcs.VPCs {
+		if vpcId == *v.VPCID {
+			foundVpc = true
+		}
+	}
+	if !foundVpc {
+		rw.WriteHeader(http.StatusNotFound)
+		writeJson(rw, map[string]string{
+			"error": "no vpc with that id",
+		})
+		return
+	}
+
+	instanceFilters := []*ec2.Filter{
 		&ec2.Filter{
-			Name: &vpcFilterName,
+			Name:   &vpcFilterName,
 			Values: []*string{&vpcId},
 		},
 	}
-	ec2params := &ec2.DescribeInstancesInput{
-		Filters: ec2filters,
+	instanceParams := &ec2.DescribeInstancesInput{
+		Filters: instanceFilters,
 	}
-	instances, err := ec2service.DescribeInstances(ec2params)
+	instances, err := ec2service.DescribeInstances(instanceParams)
 	if err != nil {
 		panic(err)
 	}

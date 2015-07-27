@@ -1,16 +1,16 @@
 package api
 
 import (
+	"encoding/json"
+	"errors"
+	"fmt"
 	"github.com/gocraft/health"
 	"github.com/gocraft/web"
 	"github.com/nu7hatch/gouuid"
-	"fmt"
-	"net/http"
-	"errors"
-	"runtime"
 	"io"
+	"net/http"
+	"runtime"
 	"strconv"
-	"encoding/json"
 )
 
 type Context struct {
@@ -117,7 +117,7 @@ func renderServerError(rw web.ResponseWriter) {
 	fmt.Fprintf(rw, "\"not good\"\n")
 }
 
-func validatePresencePathParams(params map[string]string, keys... string) bool {
+func validatePresencePathParams(params map[string]string, keys ...string) bool {
 	ok := true
 	for _, k := range keys {
 		if params[k] == "" {
@@ -130,7 +130,7 @@ func validatePresencePathParams(params map[string]string, keys... string) bool {
 
 // FIXME: combine presence validation of path params and form value
 // FIXME: this is case sensitive which is wrong
-func validatePresenceRequest(r *web.Request, keys... string) bool {
+func validatePresenceRequest(r *web.Request, keys ...string) bool {
 	ok := true
 	for _, k := range keys {
 		if r.FormValue(k) == "" {
