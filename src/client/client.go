@@ -49,7 +49,7 @@ func (c *Client) buildRequest(method, path string) (*http.Request, error) {
 }
 
 type listInstancesResponse struct {
-	instances []string `json:"instances"`
+	Instances []string `json:"instances"`
 }
 
 func (c *Client) ListInstances(vpc string) ([]string, error) {
@@ -72,13 +72,13 @@ func (c *Client) ListInstances(vpc string) ([]string, error) {
 		return nil, fmt.Errorf(string(body))
 	}
 
-	instances := new(listInstancesResponse)
-	err = json.Unmarshal(body, instances)
+	var instances listInstancesResponse
+	err = json.Unmarshal(body, &instances)
 	if err != nil {
 		return nil, err
 	}
 
-	return instances.instances, nil
+	return instances.Instances, nil
 }
 
 func (c *Client) Terminate(instance string) error {
