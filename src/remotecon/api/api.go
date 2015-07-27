@@ -3,7 +3,7 @@ package api
 import (
 	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/awsutil"
+	// "github.com/aws/aws-sdk-go/aws/awsutil"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/service/ec2"
 	"github.com/gocraft/web"
@@ -92,8 +92,14 @@ func (c *ApiContext) VpcListInstances(rw web.ResponseWriter, r *web.Request) {
 		panic(err)
 	}
 
-	writeJson(rw, map[string]string{
-		"instances": awsutil.StringValue(instances),
+	instanceOutput := make([]string, 0)
+	for _, r := range instances.Reservations {
+		for _, i := range r.Instances {
+			instanceOutput = append(instanceOutput, *i.InstanceID)
+		}
+	}
+	writeJson(rw, map[string][]string{
+		"instances": instanceOutput,
 	})
 }
 
