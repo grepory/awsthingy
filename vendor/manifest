@@ -1,0 +1,114 @@
+{
+	"version": 0,
+	"dependencies": [
+		{
+			"importpath": "bitbucket.org/ww/goautoneg",
+			"repository": "https://bitbucket.org/ww/goautoneg",
+			"revision": "75cd24fc2f2c",
+			"branch": "default"
+		},
+		{
+			"importpath": "github.com/beorn7/perks/quantile",
+			"repository": "https://github.com/beorn7/perks",
+			"revision": "b965b613227fddccbfffe13eae360ed3fa822f8d",
+			"branch": "master",
+			"path": "/quantile"
+		},
+		{
+			"importpath": "github.com/braintree/manners",
+			"repository": "https://github.com/braintree/manners",
+			"revision": "811f40057a260997d28e4e49a01d77faaa6263f1",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/buger/goterm",
+			"repository": "https://github.com/buger/goterm",
+			"revision": "db9aaed44abbb1be9061aa43612ede2e864c5973",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/gocraft/health",
+			"repository": "https://github.com/gocraft/health",
+			"revision": "6bc56b7d5fcaa70b9a1387318ec885ec4a987def",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/gocraft/web",
+			"repository": "https://github.com/gocraft/web",
+			"revision": "934a096ff6918ed5d4667075794a8d18a88c1576",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/golang/protobuf/proto",
+			"repository": "https://github.com/golang/protobuf",
+			"revision": "0f7a9caded1fb3c9cc5a9b4bcf2ff633cc8ae644",
+			"branch": "master",
+			"path": "/proto"
+		},
+		{
+			"importpath": "github.com/inconshreveable/mousetrap",
+			"repository": "https://github.com/inconshreveable/mousetrap",
+			"revision": "76626ae9c91c4f2a10f34cad8ce83ea42c93bb75",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/matttproud/golang_protobuf_extensions/pbutil",
+			"repository": "https://github.com/matttproud/golang_protobuf_extensions",
+			"revision": "fc2b8d3a73c4867e51861bbdd5ae3c1f0869dd6a",
+			"branch": "master",
+			"path": "/pbutil"
+		},
+		{
+			"importpath": "github.com/nu7hatch/gouuid",
+			"repository": "https://github.com/nu7hatch/gouuid",
+			"revision": "179d4d0c4d8d407a32af483c2354df1d2c91e6c3",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/prometheus/client_golang/model",
+			"repository": "https://github.com/prometheus/client_golang",
+			"revision": "6dbab8106ed3ed77359ac85d9cf08e30290df864",
+			"branch": "master",
+			"path": "/model"
+		},
+		{
+			"importpath": "github.com/prometheus/client_golang/prometheus",
+			"repository": "https://github.com/prometheus/client_golang",
+			"revision": "6dbab8106ed3ed77359ac85d9cf08e30290df864",
+			"branch": "master",
+			"path": "/prometheus"
+		},
+		{
+			"importpath": "github.com/prometheus/client_golang/text",
+			"repository": "https://github.com/prometheus/client_golang",
+			"revision": "6dbab8106ed3ed77359ac85d9cf08e30290df864",
+			"branch": "master",
+			"path": "/text"
+		},
+		{
+			"importpath": "github.com/prometheus/client_model/go",
+			"repository": "https://github.com/prometheus/client_model",
+			"revision": "fa8ad6fec33561be4280a8f0514318c79d7f6cb6",
+			"branch": "master",
+			"path": "/go"
+		},
+		{
+			"importpath": "github.com/prometheus/procfs",
+			"repository": "https://github.com/prometheus/procfs",
+			"revision": "c91d8eefde16bd047416409eb56353ea84a186e4",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/spf13/cobra",
+			"repository": "https://github.com/spf13/cobra",
+			"revision": "385fc87e4343efec233811d3d933509e8975d11a",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/spf13/pflag",
+			"repository": "https://github.com/spf13/pflag",
+			"revision": "67cbc198fd11dab704b214c1e629a97af392c085",
+			"branch": "master"
+		}
+	]
+}
