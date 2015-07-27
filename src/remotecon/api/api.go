@@ -39,7 +39,7 @@ func (c *Context) CloneInstance(rw web.ResponseWriter, r *web.Request) {
 }
 
 func (c *Context) ValidateAwsCredentials(rw web.ResponseWriter, r *web.Request, next web.NextMiddlewareFunc) {
-	if ok := validatePresence(r.PathParams, "AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"); !ok {
+	if ok := validatePresenceRequest(r, "AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"); !ok {
 		rw.WriteHeader(http.StatusBadRequest)
 		writeJson(rw, map[string]string{
 			"error": "missing credentials",

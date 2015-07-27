@@ -117,10 +117,22 @@ func renderServerError(rw web.ResponseWriter) {
 	fmt.Fprintf(rw, "\"not good\"\n")
 }
 
-func validatePresence(params map[string]string, keys... string) bool {
+func validatePresencePathParams(params map[string]string, keys... string) bool {
 	ok := true
 	for _, k := range keys {
 		if params[k] == "" {
+			ok = false
+			break
+		}
+	}
+	return ok
+}
+
+// FIXME: combine presence validation of path params and form value
+func validatePresenceRequest(r *web.Request, keys... string) bool {
+	ok := true
+	for _, k := range keys {
+		if r.FormValue(k) == "" {
 			ok = false
 			break
 		}
